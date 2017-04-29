@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,27 +9,163 @@
     tools:context=".SelectionMenu"
     android:background="@drawable/background_watermark">
 
-    <RelativeLayout
-        android:layout_width="368dp"
-        android:layout_height="593dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/selectiveConstraint">
+
+    <ImageView
+        android:layout_width="312dp"
+        android:layout_height="195dp"
+        app:srcCompat="@drawable/logo_shadow"
+        android:id="@+id/logo"
+        android:accessibilityLiveRegion="polite"
+        tools:layout_editor_absoluteY="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:text="APRIL 26 2017, WEDNESDAY TOWNNAME 23'C"
+        android:layout_width="235dp"
+        android:layout_height="45dp"
+        android:id="@+id/dateDayTownTemp"
+        android:textColor="#757575"
+        android:textSize="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.62">
+        android:layout_alignBottom="@+id/logo"
+        android:layout_alignParentStart="true"
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.85" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="102dp"
-            android:layout_height="136dp"
-            tools:layout_editor_absoluteY="85dp"
-            tools:layout_editor_absoluteX="129dp"
-            android:id="@+id/textView2"
-            android:textColor="#212121"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="159dp" />
-    </RelativeLayout>
+        <Button
+            android:text="WEATHER"
+            android:id="@+id/weatherButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_height="100dp"
+            android:layout_width="250dp" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:text="WATER TABLE &#xa; AND RAINFALL"
+            android:id="@+id/waterTableAndRainfallButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weatherButton"
+            android:layout_height="100dp"
+            android:layout_width="250dp" />
+
+        <Button
+            android:text="IRRIGATION"
+            android:id="@+id/irrigationButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waterTableAndRainfallButton"
+            android:layout_height="100dp"
+            android:layout_width="250dp" />
+
+        <Button
+            android:text="CROP GROWTH"
+            android:layout_height="100dp"
+            android:id="@+id/cropGrowthButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/irrigationButton"
+            android:layout_width="250dp" />
+
+        <Button
+            android:text="SOIL MOISTURE"
+            android:id="@+id/soilMoistureButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cropGrowthButton"
+            android:layout_height="100dp"
+            android:layout_width="250dp" />
+
+        <Button
+            android:text="ABOUT"
+            android:id="@+id/aboutButton"
+            android:background="@drawable/sfa"
+            android:textColor="#757575"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/soilMoistureButton"
+            android:layout_height="100dp"
+            android:layout_width="250dp" />
+
+        <ImageView
+            app:srcCompat="@drawable/weather_white_600x600"
+            android:id="@+id/weatherIcon"
+            app:layout_constraintLeft_toRightOf="@+id/weatherButton"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            android:layout_width="75dp"
+            android:layout_height="100dp" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/watertable_white_600x600"
+            android:id="@+id/watertabelcon"
+            app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
+            app:layout_constraintLeft_toRightOf="@+id/waterTableAndRainfallButton" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/irrigation_white_600x600"
+            android:id="@+id/irrigationIcon"
+            app:layout_constraintTop_toBottomOf="@+id/watertabelcon"
+            app:layout_constraintLeft_toRightOf="@+id/irrigationButton" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/cropgrowth_white_600x600"
+            android:id="@+id/cropgrowthIcon"
+            app:layout_constraintTop_toBottomOf="@+id/irrigationIcon"
+            app:layout_constraintLeft_toRightOf="@+id/cropGrowthButton" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/soil_moisture_white_600x600"
+            android:id="@+id/soilmoistureIcon"
+            app:layout_constraintTop_toBottomOf="@+id/cropgrowthIcon"
+            app:layout_constraintLeft_toRightOf="@+id/soilMoistureButton" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/about_white_600x600"
+            android:id="@+id/aboutIcon"
+            app:layout_constraintTop_toBottomOf="@+id/soilmoistureIcon"
+            app:layout_constraintLeft_toRightOf="@+id/aboutButton" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

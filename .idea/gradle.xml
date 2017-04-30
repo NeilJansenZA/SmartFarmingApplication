@@ -5,11 +5,14 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="J:\AndroidStudio\gradle\gradle-2.14.1" />
+        <option name="gradleHome" value="D:\Software\Android studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/jtds-1.2.7" />
+            <option value="$PROJECT_DIR$/sqljdbc41" />
+            <option value="$PROJECT_DIR$/sqljdbc42" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

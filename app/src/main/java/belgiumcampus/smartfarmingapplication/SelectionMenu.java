@@ -1,80 +1,70 @@
 package belgiumcampus.smartfarmingapplication;
 
-import android.os.Handler;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.concurrent.ExecutionException;
 
 public class SelectionMenu extends AppCompatActivity {
 
+    Button weatherB, waterTableB, irrigationB, cropGrowthB, soilMoistureB, aboutB;
+    Intent weather, waterTable, irriagation, cropGrowth, soilMousture, about;
+    TextView dateDayTownTemp;
+    String dataForDateDayTownTemp;
 
-    TextView tvdateDayTownTemp;
-    String dateString;
+    /* Sover is die DateDayTownTemp ge hardcode net om a voorbeeld te wys van hoe dit moet lyk,
+    gedink dis net makliker om dit in een TextView te he en dan net die data concatenate soos nodig */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection_menu);
-        tvdateDayTownTemp = (TextView)findViewById(R.id.dateDayTownTemp);
 
-        long date = System.currentTimeMillis();
-                                            //april 26 2017, wednesday
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd yyyy, EEEE");
+        weatherB = (Button) findViewById(R.id.weatherButton);
+        waterTableB = (Button) findViewById(R.id.waterTableAndRainfallButton);
+        irrigationB = (Button) findViewById(R.id.irrigationButton);
+        cropGrowthB = (Button) findViewById(R.id.cropGrowthButton);
+        soilMoistureB = (Button) findViewById(R.id.soilMoistureButton);
+        aboutB = (Button) findViewById(R.id.aboutButton);
 
+        dateDayTownTemp = (TextView) findViewById(R.id.dateDayTownTemp);
 
-
-         dateString = sdf.format(date);
-
-        startRepeatingTask();
-        tvdateDayTownTemp.setText(dateString);
+        Typeface tfBold = Typeface.createFromAsset(getAssets(), "fonts/montserra_-black.ttf");
+        Typeface tfRegular = Typeface.createFromAsset(getAssets(), "fonts/montserrat_regular.ttf");
+        dateDayTownTemp.setTypeface(tfBold);
+        weatherB.setTypeface(tfRegular);
+        waterTableB.setTypeface(tfRegular);
+        irrigationB.setTypeface(tfRegular);
+        cropGrowthB.setTypeface(tfRegular);
+        soilMoistureB.setTypeface(tfRegular);
+        aboutB.setTypeface(tfRegular);
     }
 
-    private final static int INTERVAL = 5000; //0.30
-    Handler mHandler = new Handler();
-
-    Runnable mHandlerTask = new Runnable()
+    public void switchToWeather(View v)
     {
-        @Override
-        public void run() {
-            readData();
-            mHandler.postDelayed(mHandlerTask, INTERVAL);
-        }
-    };
-    void startRepeatingTask()
-    {
-        mHandlerTask.run();
+        weather = new Intent(getApplicationContext(), Weather.class);
+        startActivity(weather);
     }
-    void stopRepeatingTask()
+
+    public void switchToIrrigation(View v)
     {
-        mHandler.removeCallbacks(mHandlerTask);
+
     }
-    public void readData()
+
+    public void switchToCropGrowth(View v)
     {
-        String receivedData = "No Data";
-        try {
-                                                                                            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 
-        String [] Data = receivedData.split(";");
+    }
 
-        try {
-          int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "TownName";
+    public void switchToSoilMoisture(View v)
+    {
 
-            String display = String.format("%s \n%s %o°C",dateString ,townName, currentTemp);
-            tvdateDayTownTemp.setText(display);
-        }catch (Exception e)
-        {
-            Log.e("error:", e.getMessage());
-        }
+    }
+
+    public void switchToAbout(View v)
+    {
 
     }
 

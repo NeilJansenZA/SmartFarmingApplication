@@ -72,6 +72,11 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
         String procedureName = params[0];
         int columns = new Integer(params[1]);
         int rows = new Integer(params[2]);
+        String specificColumns = null;
+        if (params.length ==4)
+        {
+            specificColumns = params[4];
+        }
         String resultStringConcatenation = null;
 
         try
@@ -89,22 +94,50 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
                 rs.next();
 
                 resultStringConcatenation = new String();
-                for (int i = 0; i < rows; i++)
+
+                if (specificColumns != null)
                 {
-                    for (int c = 0; c < columns; c++)
+
+                    for (int i = 0; i < rows; i++)
                     {
-                        String addition = rs.getString(c+1);
-                        if (i == 0 && c == 0)
+                        for (int c = 0; c < columns; c++)
                         {
-                            resultStringConcatenation = addition +";";
+                            if (specificColumns.contains(String.valueOf(c+1))) {
+                                String addition = rs.getString(c + 1);
+                                if (i == 0 && c == 0) {
+                                    resultStringConcatenation = addition + ";";
+                                } else {
+                                    resultStringConcatenation += addition + ";";
+                                }
+                            }
                         }
-                        else
-                        {
-                            resultStringConcatenation +=  addition+ ";" ;
-                        }
+                        rs.next();
                     }
-                    rs.next();
+
+                }else
+                {
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int c = 0; c < columns; c++)
+                        {
+                            String addition = rs.getString(c+1);
+                            if (i == 0 && c == 0)
+                            {
+                                resultStringConcatenation = addition +";";
+                            }
+                            else
+                            {
+                                resultStringConcatenation +=  addition+ ";" ;
+                            }
+                        }
+                        rs.next();
+                    }
                 }
+
+
+
+
+
             }
         }
         catch (Exception ex)

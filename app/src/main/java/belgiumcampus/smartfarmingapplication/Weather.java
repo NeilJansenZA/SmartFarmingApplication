@@ -74,7 +74,7 @@ String receivedData = "No;Data";
         String shortReceivedForecastData = "No;Data";
         try {
 
-            shortReceivedForecastData = new AsyncServerAccessSpecific(this.getApplicationContext()).execute("WeatherForecast",  "6"   ,"8","1,2,3,6").get();
+            shortReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("WeatherForecast",  "6"   ,"8","1,2,3,6").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

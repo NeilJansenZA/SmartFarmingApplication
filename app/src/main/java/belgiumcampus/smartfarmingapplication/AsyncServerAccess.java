@@ -75,7 +75,7 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
         String specificColumns = null;
         if (params.length ==4)
         {
-            specificColumns = params[4];
+            specificColumns = params[3];
         }
         String resultStringConcatenation = null;
 

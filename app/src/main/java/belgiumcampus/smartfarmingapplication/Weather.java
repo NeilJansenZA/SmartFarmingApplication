@@ -15,8 +15,8 @@ import java.text.SimpleDateFormat;
 
 public class Weather extends AppCompatActivity {
 
-    TextView weatherTitle, weatherData;
-    String dataForWeatherDate;
+    TextView weatherTitle, weatherData, tvCurrentTemp, tvMinTemp, tvMaxTemp, tvPrecipitation, tvHumidity;
+    String dataForWeatherDate, dataForCurrentTemp, dataForMinTemp, dataForMaxTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +27,23 @@ public class Weather extends AppCompatActivity {
 
         weatherTitle = (TextView) findViewById(R.id.weatherTitle);
         weatherData = (TextView) findViewById(R.id.weatherTodayDate);
+        tvCurrentTemp = (TextView) findViewById(R.id.tvCurrentTemp);
+        tvMinTemp = (TextView) findViewById(R.id.tvMinTemp);
+        tvMaxTemp = (TextView) findViewById(R.id.tvMaxTemp);
+        tvPrecipitation = (TextView) findViewById(R.id.tvPrecipitation);
+        tvHumidity = (TextView) findViewById(R.id.tvHumidity);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Typeface montserratBold = Typeface.createFromAsset(getAssets(), "fonts/montserrat_bold.ttf");
+        Typeface robotoRegular = Typeface.createFromAsset(getAssets(), "fonts/roboto_regular.ttf");
+
         weatherTitle.setTypeface(montserratBold);
         weatherData.setTypeface(montserratBold);
+        tvCurrentTemp.setTypeface(robotoRegular);
+        tvMinTemp.setTypeface(robotoRegular);
+        tvMaxTemp.setTypeface(robotoRegular);
+        tvPrecipitation.setTypeface(robotoRegular);
+        tvHumidity.setTypeface(robotoRegular);
 
         long date = System.currentTimeMillis();
         //april 26 2017

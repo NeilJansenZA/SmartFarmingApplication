@@ -39,15 +39,15 @@ public class SelectionMenu extends AppCompatActivity {
 
         dateDayTownTemp = (TextView) findViewById(R.id.dateDayTownTemp);
 
-        Typeface tfBold = Typeface.createFromAsset(getAssets(), "fonts/montserra_-black.ttf");
-        Typeface tfRegular = Typeface.createFromAsset(getAssets(), "fonts/montserrat_regular.ttf");
-        dateDayTownTemp.setTypeface(tfBold);
-        weatherB.setTypeface(tfRegular);
-        waterTableB.setTypeface(tfRegular);
-        irrigationB.setTypeface(tfRegular);
-        cropGrowthB.setTypeface(tfRegular);
-        soilMoistureB.setTypeface(tfRegular);
-        aboutB.setTypeface(tfRegular);
+        Typeface montserratBold = Typeface.createFromAsset(getAssets(), "fonts/montserrat_bold.ttf");
+        Typeface robotoRegular = Typeface.createFromAsset(getAssets(), "fonts/roboto_regular.ttf");
+        dateDayTownTemp.setTypeface(montserratBold);
+        weatherB.setTypeface(robotoRegular);
+        waterTableB.setTypeface(robotoRegular);
+        irrigationB.setTypeface(robotoRegular);
+        cropGrowthB.setTypeface(robotoRegular);
+        soilMoistureB.setTypeface(robotoRegular);
+        aboutB.setTypeface(robotoRegular);
 
         long date = System.currentTimeMillis();
         //april 26 2017, wednesday.

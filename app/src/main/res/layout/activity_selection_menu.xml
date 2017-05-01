@@ -26,11 +26,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:text="APRIL 26 2017, WEDNESDAY TOWNNAME 23'C"
         android:layout_width="235dp"
         android:layout_height="45dp"
         android:id="@+id/dateDayTownTemp"
-        android:textColor="#757575"
+        android:textColor="#464646"
         android:textSize="16sp"
         android:fontFamily="monserrat_bold"
         android:layout_marginStart="16dp"
@@ -44,8 +43,8 @@
         <Button
             android:text="WEATHER"
             android:id="@+id/weatherButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:fontFamily="montserrat_black"
             app:layout_constraintTop_toBottomOf="@+id/logo"
@@ -57,8 +56,8 @@
         <Button
             android:text="WATER TABLE &#xa; AND RAINFALL"
             android:id="@+id/waterTableAndRainfallButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:fontFamily="montserrat_black"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -69,8 +68,8 @@
         <Button
             android:text="IRRIGATION"
             android:id="@+id/irrigationButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:gravity="center"
             android:fontFamily="montserrat_black"
@@ -83,8 +82,8 @@
             android:text="CROP GROWTH"
             android:layout_height="100dp"
             android:id="@+id/cropGrowthButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:fontFamily="montserrat_black"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -94,8 +93,8 @@
         <Button
             android:text="SOIL MOISTURE"
             android:id="@+id/soilMoistureButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:fontFamily="montserrat_black"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -106,8 +105,8 @@
         <Button
             android:text="ABOUT"
             android:id="@+id/aboutButton"
-            android:background="@drawable/sfa"
-            android:textColor="#757575"
+            android:background="@drawable/menu_button"
+            android:textColor="#464646"
             android:textSize="24sp"
             android:fontFamily="montserrat_black"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -126,7 +125,7 @@
         <ImageView
             android:layout_width="75dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/watertable_white_600x600"
+            app:srcCompat="@drawable/water_table_white_600x600"
             android:id="@+id/watertabelcon"
             app:layout_constraintTop_toBottomOf="@+id/weatherIcon"
             app:layout_constraintLeft_toRightOf="@+id/waterTableAndRainfallButton" />

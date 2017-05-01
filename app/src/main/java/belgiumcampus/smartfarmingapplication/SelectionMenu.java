@@ -20,11 +20,10 @@ public class SelectionMenu extends AppCompatActivity {
     TextView dateDayTownTemp;
     String dataForDateDayTownTemp;
 
-    private final static int INTERVAL = 5000; //0.30
+    private final static int INTERVAL = 60 * 60 * 1000; //0.30
     Handler mHandler = new Handler();
 
-    /* Sover is die DateDayTownTemp ge hardcode net om a voorbeeld te wys van hoe dit moet lyk,
-    gedink dis net makliker om dit in een TextView te he en dan net die data concatenate soos nodig */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,30 @@ public class SelectionMenu extends AppCompatActivity {
         dataForDateDayTownTemp = sdf.format(date);
 
         startRepeatingTask();
-        dateDayTownTemp.setText(dataForDateDayTownTemp);
+
+
+
+        String receivedData = "No Data";
+        try
+        {
+            //Procedure name,Columns,Rows
+            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+
+        String [] Data = receivedData.split(";");
+
+        int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
+        String townName = "TownName";
+
+
+        dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
+
     }
 
     void startRepeatingTask()
@@ -127,8 +149,9 @@ public class SelectionMenu extends AppCompatActivity {
             int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
             String townName = "TownName";
 
-            String display = String.format("%s \n%s %o°C",dataForDateDayTownTemp ,townName, currentTemp);
-            dateDayTownTemp.setText(display);
+
+            dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
+
         }
         catch (Exception e)
         {

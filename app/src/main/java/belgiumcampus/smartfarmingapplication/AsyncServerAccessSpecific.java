@@ -26,7 +26,7 @@ public class AsyncServerAccessSpecific extends AsyncTask<String,Void,String>
     String db = "SmartFarmingDB";
     String un = "SmartFarming";
     String password = "SmartFarming321";
-
+//
     public Connection CONN()
     {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()

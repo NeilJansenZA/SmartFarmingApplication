@@ -67,8 +67,13 @@ String receivedData = "No;Data";
 
         String[] objectData = receivedData.split(";");
 
+try {
+    currentWeatherObject = new WeatherObject(objectData[0],objectData[1],objectData[2],objectData[3],objectData[4],objectData[5],objectData[6],objectData[7]);
+}catch (Exception e)
+{
+currentWeatherObject = null;
+}
 
-         currentWeatherObject = new WeatherObject(objectData[0],objectData[1],objectData[2],objectData[3],objectData[4],objectData[5],objectData[6],objectData[7]);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         String shortReceivedForecastData = "No;Data";
@@ -80,16 +85,23 @@ String receivedData = "No;Data";
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
         String[] shortForecastData = shortReceivedForecastData.split(";");
-
         eightDayForecastList = new ArrayList<String>();
         String concat;
-
-        for (int i = 0; i < 32; i= i+4) {
-        concat = shortForecastData[i].substring(8) +";"+ shortForecastData[i +2].substring(0,shortForecastData[i +2].indexOf(".")) + ";" + shortForecastData[i+1].substring(0,shortForecastData[i +1].indexOf(".")) + ";" + shortForecastData[i+3];
-            eightDayForecastList.add( concat);
+        try {
+            for (int i = 0; i < 32; i= i+4) {
+                concat = shortForecastData[i].substring(8) +";"+ shortForecastData[i +2].substring(0,shortForecastData[i +2].indexOf(".")) + ";" + shortForecastData[i+1].substring(0,shortForecastData[i +1].indexOf(".")) + ";" + shortForecastData[i+3];
+                eightDayForecastList.add( concat);
+            }
+        }catch (Exception e)
+        {
+            eightDayForecastList = null;
         }
+
+
+
+
+
 
 
 
@@ -108,13 +120,18 @@ String receivedData = "No;Data";
 thirtyDayForecastList = new ArrayList<String>();
 
 String longForecastConcat;
+try {
+    for (int i = 0; i < 90; i= i+3) {
 
-        for (int i = 0; i < 90; i= i+3) {
+        longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
+        thirtyDayForecastList.add(longForecastConcat);
 
-            longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
-            thirtyDayForecastList.add(longForecastConcat);
+    }
+}catch (Exception e)
+{
+    thirtyDayForecastList = null;
+}
 
-        }
 
 
 

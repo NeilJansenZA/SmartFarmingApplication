@@ -1,8 +1,10 @@
 package belgiumcampus.smartfarmingapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,19 @@ public class SelectionMenu extends AppCompatActivity {
     private final static int INTERVAL = 60 * 60 * 1000; //0.30
     Handler mHandler = new Handler();
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startRepeatingTask();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +88,32 @@ public class SelectionMenu extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String [] Data = receivedData.split(";");
+        try {
+            String [] Data = receivedData.split(";");
 
-        int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-        String townName = "TownName";
+            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
+            String townName = "TownName";
 
 
-        dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
+            dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
+
+        }catch (Exception e)
+        {
+            dateDayTownTemp.setText("No internet connection");
+
+            //AlertDialog.Builder builder = new AlertDialog.Builder(this);
+           // builder.setMessage("No internet connection!")
+           //         .setCancelable(false)
+           //         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+           //             public void onClick(DialogInterface dialog, int id) {
+           //                 finish();
+           //             }
+           //         });
+           // AlertDialog alert = builder.create();
+           // alert.show();
+
+        }
+
 
     }
 

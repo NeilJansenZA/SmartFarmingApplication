@@ -16,8 +16,8 @@
         android:id="@+id/weatherConstraint">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="219dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/weather_top_card"
             android:id="@+id/imgWeatherTopCar"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -50,7 +50,7 @@
             </android.support.v7.widget.Toolbar>
 
         <TextView
-            android:text="TODAY, MAY 01 2017"
+            android:text=""
             android:layout_width="258dp"
             android:layout_height="38dp"
             android:textColor="#464646"
@@ -63,7 +63,6 @@
             android:layout_marginTop="64dp" />
 
         <TextView
-            android:text="23°C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvCurrentTemp"
@@ -75,17 +74,16 @@
             android:layout_marginStart="56dp" />
 
         <ImageView
-            android:layout_width="108dp"
-            android:layout_height="117dp"
             app:srcCompat="@drawable/partlycloudy"
             android:id="@+id/imgWeatherIcon"
             app:layout_constraintTop_toTopOf="@+id/weatherTodayDate"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toRightOf="@+id/tvCurrentTemp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="32dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <TextView
-            android:text="MIN: 21°C"
             android:id="@+id/tvMinTemp"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
@@ -96,7 +94,6 @@
             android:layout_marginStart="56dp" />
 
         <TextView
-            android:text="MAX: 24°C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvMaxTemp"
@@ -107,7 +104,6 @@
             android:layout_marginStart="16dp" />
 
         <TextView
-            android:text="PRECIPITATION: XX%"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvPrecipitation"
@@ -118,7 +114,6 @@
             android:layout_marginStart="56dp" />
 
         <TextView
-            android:text="HUMIDITY: 20%"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvHumidity"
@@ -127,5 +122,241 @@
             app:layout_constraintTop_toBottomOf="@+id/tvPrecipitation"
             app:layout_constraintLeft_toLeftOf="@+id/imgWeatherTopCar"
             android:layout_marginStart="56dp" />
+
+        <TableLayout
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/tblEightDayForecastTable"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/displayForecast">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:background="#90EC58"
+                android:id="@+id/rowDay"
+                android:layout_height="wrap_content"
+                android:padding="5dip">
+                <TextView
+                    android:id="@+id/dayDate"
+                    android:text="DAY"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/dayOne"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/dayTwo"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/dayThree"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/dayFour"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/dayFive"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/daySix"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/daySeven"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#7AF0DE"
+                android:id="@+id/rowMin"
+                android:padding="5dip">
+                <TextView
+                    android:id="@+id/showMin"
+                    android:text="MIN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/oneMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/twoMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/threeMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/fourMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/fiveMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/sixMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/sevenMin"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#90EC58"
+                android:id="@+id/rowMax"
+                android:padding="5dip">
+                <TextView
+                    android:id="@+id/showMax"
+                    android:text="MAX"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/oneMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/twoMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/threeMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/fourMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/fiveMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/sixMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/sevenMax"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#7AF0DE"
+                android:id="@+id/rowDescription"
+                android:padding="5dip">
+                <TextView
+                    android:id="@+id/showDescription"
+                    android:text="WTH"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+                <ImageView
+                    android:id="@+id/imgOne"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgTwo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgThree"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgFour"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgFive"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgSix"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+                <ImageView
+                    android:id="@+id/imgSeven"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:text="WEEKLY FORECAST"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:textColor="#464646"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:id="@+id/displayForecast"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/imgWeatherTopCar"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:id="@+id/linetext"
+            android:text="30 DAY FORECAST"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:layout_marginEnd="20dp"
+            android:textColor="#464646"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tblEightDayForecastTable"
+            android:layout_marginTop="24dp" />
+
+        <com.jjoe64.graphview.GraphView
+        android:layout_width="368dp"
+        android:layout_height="200dp"
+        android:title="Graph Title"
+        android:id="@+id/forecastGraph"
+            app:layout_constraintTop_toBottomOf="@+id/linetext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#464646"/>
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

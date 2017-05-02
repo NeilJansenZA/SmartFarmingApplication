@@ -20,7 +20,7 @@ public class SelectionMenu extends AppCompatActivity {
     TextView dateDayTownTemp;
     String dataForDateDayTownTemp;
 
-    private final static int INTERVAL = 5000; //0.30
+    private final static int INTERVAL = 0; //0.30
     Handler mHandler = new Handler();
 
     /* Sover is die DateDayTownTemp ge hardcode net om a voorbeeld te wys van hoe dit moet lyk,
@@ -125,9 +125,9 @@ public class SelectionMenu extends AppCompatActivity {
         try
         {
             int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "TownName";
+            String townName = "Venda";
 
-            String display = String.format("%s \n%s %o°C",dataForDateDayTownTemp ,townName, currentTemp);
+            String display = String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, currentTemp);
             dateDayTownTemp.setText(display);
         }
         catch (Exception e)

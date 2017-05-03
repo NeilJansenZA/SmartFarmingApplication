@@ -137,7 +137,7 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
 
 
 
-
+                DB.close(); // might give possible problems ?
             }
         }
         catch (Exception ex)

@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="belgiumcampus.smartfarmingapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:largeHeap="true">
+        android:largeHeap="true"
+        android:supportsRtl="true">
         <activity
             android:name=".SelectionMenu"
             android:theme="@style/AppTheme">
@@ -33,7 +33,10 @@
             android:name=".Weather"
             android:label="@string/title_activity_weather"
             android:theme="@style/AppTheme">
-
+        </activity>
+        <activity
+            android:name=".CropGrowth"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

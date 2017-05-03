@@ -88,7 +88,8 @@
             android:fontFamily="montserrat_black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/irrigationButton"
-            android:layout_width="250dp" />
+            android:layout_width="250dp"
+            android:onClick="switchToCropGrowth"/>
 
         <Button
             android:text="SOIL MOISTURE"

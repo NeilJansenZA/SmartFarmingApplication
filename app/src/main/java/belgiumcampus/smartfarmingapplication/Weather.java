@@ -34,6 +34,7 @@ public class Weather extends AppCompatActivity {
     String dataForWeatherDate, dataForCurrentTemp, dataForMinTemp, dataForMaxTemp, dataForPrecipitation, dataForHumidity;
     GraphView forecastGraph;
     WeatherObject currentWeatherObject;
+    View vAppBar;
     List<String> eightDayForecastList, thirtyDayForecastList; /* "this list contains the following values: 01;20;30;Sunny Day;Min;Max;Description"
     - "this list contains the following values: 5;1;0.2; Month;day;precipitation"*/
     String receivedData, shortReceivedForecastData, longReceivedForecastData = "No;Data";
@@ -65,7 +66,8 @@ public class Weather extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.weatherToolBar);
         setSupportActionBar(toolbar);
 
-        weatherTitle = (TextView) findViewById(R.id.weatherTitle);
+        vAppBar = findViewById(R.id.weatherToolBar);
+        weatherTitle = (TextView) vAppBar.findViewById(R.id.activityTitle);
         weatherData = (TextView) findViewById(R.id.weatherTodayDate);
         tvCurrentTemp = (TextView) findViewById(R.id.tvCurrentTemp);
         tvMinTemp = (TextView) findViewById(R.id.tvMinTemp);
@@ -81,6 +83,8 @@ public class Weather extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Typeface montserratBold = Typeface.createFromAsset(getAssets(), "fonts/montserrat_bold.ttf");
         Typeface robotoRegular = Typeface.createFromAsset(getAssets(), "fonts/roboto_regular.ttf");
+
+        weatherTitle.setText("WEATHER");
 
         weatherTitle.setTypeface(montserratBold);
         weatherData.setTypeface(montserratBold);
@@ -98,30 +102,28 @@ public class Weather extends AppCompatActivity {
         dataForWeatherDate = sdf.format(date).toUpperCase();
         weatherData.setText("TODAY, " + dataForWeatherDate);
 
-        try
-        {
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "8"   ,"1").get();
-        }
-        catch (InterruptedException e)
-        {
+        try {
+            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather", "8", "1").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
         String[] objectData = receivedData.split(";");
-        currentWeatherObject = new WeatherObject(objectData[0],objectData[1],objectData[2],objectData[3],objectData[4],objectData[5],objectData[6],objectData[7]);
+
+        try {
+            currentWeatherObject = new WeatherObject(objectData[0], objectData[1], objectData[2], objectData[3], objectData[4], objectData[5], objectData[6], objectData[7]);
+        } catch (Exception e) {
+            currentWeatherObject = null;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        try
-        {
-            shortReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("WeatherForecast",  "6"   ,"8","1,2,3,6").get();
-        }
-        catch (InterruptedException e)
-        {
+        try {
+            shortReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("WeatherForecast", "6", "8", "1,2,3,6").get();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -130,133 +132,127 @@ public class Weather extends AppCompatActivity {
         eightDayForecastList = new ArrayList<String>();
         String concat;
 
-        for (int i = 0; i < 32; i= i+4)
-        {
-            concat = shortForecastData[i].substring(8) +";"+ shortForecastData[i +2].substring(0,shortForecastData[i +2].indexOf(".")) + ";" + shortForecastData[i+1].substring(0,shortForecastData[i +1].indexOf(".")) + ";" + shortForecastData[i+3];
-            eightDayForecastList.add( concat);
+        try {
+            for (int i = 0; i < 32; i = i + 4) {
+                concat = shortForecastData[i].substring(8) + ";" + shortForecastData[i + 2].substring(0, shortForecastData[i + 2].indexOf(".")) + ";" + shortForecastData[i + 1].substring(0, shortForecastData[i + 1].indexOf(".")) + ";" + shortForecastData[i + 3];
+                eightDayForecastList.add(concat);
+            }
+        } catch (Exception e) {
+            eightDayForecastList = null;
         }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        try
-        {
-            longReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("ThirtyDayForecast",  "3"   ,"30").get();
-        }
-        catch (InterruptedException e)
-        {
+        try {
+            longReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("ThirtyDayForecast", "3", "30").get();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
         String[] longForecastData = longReceivedForecastData.split(";");
         thirtyDayForecastList = new ArrayList<String>();
 
-        for (int i = 0; i < 90; i= i+3)
-        {
-            longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
-            thirtyDayForecastList.add(longForecastConcat);
+        try {
+            for (int i = 0; i < 90; i = i + 3) {
+                longForecastConcat = longForecastData[i] + ";" + longForecastData[i + 1] + ";" + longForecastData[i + 2];
+                thirtyDayForecastList.add(longForecastConcat);
+            }
+        } catch (Exception e) {
+            thirtyDayForecastList = null;
         }
 
-        dataForCurrentTemp = String.valueOf(currentWeatherObject.getCurrentTemp());
-        convertFloat = (int)(currentWeatherObject.getPrecipitation() * 100);
-        dataForMinTemp = String.valueOf(currentWeatherObject.getMinTemp());
-        dataForMaxTemp = String.valueOf(currentWeatherObject.getMaxTemp());
-        dataForPrecipitation = String.valueOf(convertFloat);
-        dataForHumidity = String.valueOf(currentWeatherObject.getCurrentHumidity());
-
-        tvCurrentTemp.setText(dataForCurrentTemp + "°C");
-        tvMinTemp.setText("MIN: " + dataForMinTemp + "°C");
-        tvMaxTemp.setText("MAX: " + dataForMaxTemp + "°C");
-        tvPrecipitation.setText("PRECIPITATION: " + dataForPrecipitation + "%");
-        tvHumidity.setText("HUMIDITY: " + dataForHumidity + "%");
-
-        try
+        if (currentWeatherObject != null)
         {
-            Resources resIcon = getResources();
-            String weatherIconName = currentWeatherObject.getWeatherDescription().toLowerCase().trim();
-            int resIDIcon = resIcon.getIdentifier(weatherIconName, "drawable", getPackageName());
-            imgWeatherIcon.setImageResource(resIDIcon);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            int failID = getResources().getIdentifier("clear", "drawable", getPackageName());
-            imgWeatherIcon.setImageResource(failID);
-        }
+            dataForCurrentTemp = String.valueOf(currentWeatherObject.getCurrentTemp());
+            convertFloat = (int) (currentWeatherObject.getPrecipitation() * 100);
+            dataForMinTemp = String.valueOf(currentWeatherObject.getMinTemp());
+            dataForMaxTemp = String.valueOf(currentWeatherObject.getMaxTemp());
+            dataForPrecipitation = String.valueOf(convertFloat);
+            dataForHumidity = String.valueOf(currentWeatherObject.getCurrentHumidity());
 
-        i = 0;
-        for (String reading : eightDayForecastList)
-        {
-            splitData = reading.split(";");
-            day[i] = splitData[0];
-            min[i] = splitData[1];
-            max[i] = splitData[2];
-            desc[i] = splitData[3];
-            i++;
-        }
+            tvCurrentTemp.setText(dataForCurrentTemp + "°C");
+            tvMinTemp.setText("MIN: " + dataForMinTemp + "°C");
+            tvMaxTemp.setText("MAX: " + dataForMaxTemp + "°C");
+            tvPrecipitation.setText("PRECIPITATION: " + dataForPrecipitation + "%");
+            tvHumidity.setText("HUMIDITY: " + dataForHumidity + "%");
 
-        for (int r = 0; r < tableRowFields.length; r++)
-        {
-            for (int c = 0; c < tableRowFields[0].length; c++)
-            {
-                if(c == 0)
-                {
-                    continue;
-                }
-                else if(r == 3)
-                {
-                    imageViewArray[0][c] = (ImageView) findViewById(tableRowFields[r][c]);
-                    Resources res = getResources();
-                    String drawableName = desc[r + 1].toLowerCase().trim();
-                    int resID = res.getIdentifier(drawableName, "drawable", getPackageName());
-                    imageViewArray[0][c].setImageResource(resID);
-                }
-                else
-                {
-                    textViewArray[r][c] = (TextView) findViewById((tableRowFields[r][c]));
+            try {
+                Resources resIcon = getResources();
+                String weatherIconName = currentWeatherObject.getWeatherDescription().toLowerCase().trim();
+                weatherIconName = weatherIconName.replaceAll(" ", "");
+                int resIDIcon = resIcon.getIdentifier(weatherIconName, "drawable", getPackageName());
+                imgWeatherIcon.setImageResource(resIDIcon);
+            } catch (Exception e) {
+                e.printStackTrace();
+                int failID = getResources().getIdentifier("clear", "drawable", getPackageName());
+                imgWeatherIcon.setImageResource(failID);
+            }
 
-                    if(r == 0)
-                    {
-                        textViewArray[r][c].setText(day[c + 1]);
-                    }
-                    else if(r == 1)
-                    {
-                        textViewArray[r][c].setText(min[c + 1]);
-                    }
-                    else
-                    {
-                        textViewArray[r][c].setText(max[c + 1]);
+            i = 0;
+            for (String reading : eightDayForecastList) {
+                splitData = reading.split(";");
+                day[i] = splitData[0];
+                min[i] = splitData[1];
+                max[i] = splitData[2];
+                desc[i] = splitData[3];
+                i++;
+            }
+
+            for (int r = 0; r < tableRowFields.length; r++) {
+                for (int c = 0; c < tableRowFields[0].length; c++) {
+                    if (c == 0) {
+                        continue;
+                    } else if (r == 3) {
+                        imageViewArray[0][c] = (ImageView) findViewById(tableRowFields[r][c]);
+                        Resources res = getResources();
+                        String drawableName = desc[1].toLowerCase().trim();
+                        drawableName = drawableName.replaceAll(" ", "");
+                        int resID = res.getIdentifier(drawableName, "drawable", getPackageName());
+                        imageViewArray[0][c].setImageResource(resID);
+                    } else {
+                        textViewArray[r][c] = (TextView) findViewById((tableRowFields[r][c]));
+
+                        if (r == 0) {
+                            textViewArray[r][c].setText(day[c]);
+                        } else if (r == 1) {
+                            textViewArray[r][c].setText(min[c]);
+                        } else {
+                            textViewArray[r][c].setText(max[c]);
+                        }
                     }
                 }
             }
-        }
 
-        i = 0;
-        for (String reading : thirtyDayForecastList)
+            i = 0;
+            for (String reading : thirtyDayForecastList) {
+                splitData = reading.split(";");
+                thirtyDay[i] = splitData[1];
+                thirtyPrecipitation[i] = splitData[2];
+                i++;
+            }
+
+            forecastGraph.getViewport().setYAxisBoundsManual(true);
+            //forecastGraph.getViewport().setMaxY(100);
+            //forecastGraph.getViewport().setMinY(0);
+
+            LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(generateData());
+            forecastGraph.addSeries(forecastSeries);
+
+            forecastSeries.setColor(Color.BLACK);
+            forecastSeries.setDrawDataPoints(true);
+
+            forecastGraph.setBackgroundColor(Color.GREEN);
+            forecastGraph.getViewport().setScalable(true);
+            forecastGraph.getViewport().setScalable(true);
+
+            forecastGraph.getGridLabelRenderer().setTextSize(40);
+            forecastGraph.getGridLabelRenderer().setGridColor(Color.GREEN);
+        }
+        else
         {
-            splitData = reading.split(";");
-            thirtyDay[i] = splitData[1];
-            thirtyPrecipitation[i] = splitData[2];
-            i++;
+            weatherData.setText("No internet connection");
         }
-
-        forecastGraph.getViewport().setYAxisBoundsManual(true);
-        //forecastGraph.getViewport().setMaxY(100);
-        //forecastGraph.getViewport().setMinY(0);
-
-        LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(generateData());
-        forecastGraph.addSeries(forecastSeries);
-
-        forecastSeries.setColor(Color.BLACK);
-        forecastSeries.setDrawDataPoints(true);
-
-        forecastGraph.setBackgroundColor(Color.GREEN);
-        forecastGraph.getViewport().setScalable(true);
-        forecastGraph.getViewport().setScalable(true);
-
-        forecastGraph.getGridLabelRenderer().setTextSize(40);
-        forecastGraph.getGridLabelRenderer().setGridColor(Color.GREEN);
     }
 
     private DataPoint[] generateData()

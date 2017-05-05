@@ -29,13 +29,10 @@ public class SelectionMenu extends AppCompatActivity {
     private final static int INTERVAL = 60 * 60 * 1000; //0.30
     Handler mHandler = new Handler();
 
-
-
     @Override
     protected void onPause()
     {
         super.onPause();
-        finish();
     }
     @Override
       protected void onResume()
@@ -78,35 +75,12 @@ public class SelectionMenu extends AppCompatActivity {
 
         startRepeatingTask();
 
-        String receivedData = "No Data";
-        try
-        {
-            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+        String receivedData = WeatherObject.SelectionMenuDisplay(this.getApplicationContext(),dataForDateDayTownTemp);
 
-        try
+        dateDayTownTemp.setText(receivedData);
+
+        if(receivedData.equals("No internet"))
         {
-            String [] Data = receivedData.split(";");
-
-            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "TownName";
-
-
-            dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
-
-        }
-        catch (Exception e)
-        {
-            dateDayTownTemp.setText("No internet connection");
             confirmConnection(SelectionMenu.this);
         }
     }

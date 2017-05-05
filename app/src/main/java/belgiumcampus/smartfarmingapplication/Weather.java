@@ -1,5 +1,7 @@
 package belgiumcampus.smartfarmingapplication;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,15 +10,31 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -28,18 +46,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class Weather extends AppCompatActivity {
+public class Weather extends AppCompatActivity implements
+        OnChartGestureListener,
+        OnChartValueSelectedListener {
 
-    TextView weatherTitle, weatherData, tvCurrentTemp, tvMinTemp, tvMaxTemp, tvPrecipitation, tvHumidity, tvWeeklyForecast, tv30DayForecast;
+    TextView weatherTitle, weatherData, tvCurrentTemp, tvMinTemp, tvMaxTemp, tvPrecipitation, tvHumidity, tvWeeklyForecast, tv30DayForecast, dayDate, dayMin, dayMax, dayWth;
     String dataForWeatherDate, dataForCurrentTemp, dataForMinTemp, dataForMaxTemp, dataForPrecipitation, dataForHumidity;
-    GraphView forecastGraph;
+    LineChart forecastGraph;
     WeatherObject currentWeatherObject;
     View vAppBar;
-    List<String> eightDayForecastList, thirtyDayForecastList; /* "this list contains the following values: 01;20;30;Sunny Day;Min;Max;Description"
+    ArrayList<String> eightDayForecastList, thirtyDayForecastList; /* "this list contains the following values: 01;20;30;Sunny Day;Min;Max;Description"
     - "this list contains the following values: 5;1;0.2; Month;day;precipitation"*/
-    String receivedData, shortReceivedForecastData, longReceivedForecastData = "No;Data";
-    String longForecastConcat;
-    int convertFloat, i = 0;
+    int convertFloat, i, highest = 0;
     ImageView imgWeatherIcon;
     String[] splitData;
     String[] day = new String[8];
@@ -49,6 +67,7 @@ public class Weather extends AppCompatActivity {
     String[] thirtyDay = new String[30];
     String[] thirtyPrecipitation = new String[30];
     TableLayout tblLayout;
+    Boolean connection = true;
 
     int[][] tableRowFields = new int[][]
             {
@@ -59,9 +78,14 @@ public class Weather extends AppCompatActivity {
             };
     TextView[][] textViewArray = new TextView[3][7];
     ImageView[][] imageViewArray = new ImageView[1][7];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadActivity();
+    }
+
+    protected void loadActivity() {
         setContentView(R.layout.activity_weather);
         Toolbar toolbar = (Toolbar) findViewById(R.id.weatherToolBar);
         setSupportActionBar(toolbar);
@@ -78,11 +102,17 @@ public class Weather extends AppCompatActivity {
         tv30DayForecast = (TextView) findViewById(R.id.linetext);
         imgWeatherIcon = (ImageView) findViewById(R.id.imgWeatherIcon);
         tblLayout = (TableLayout) findViewById(R.id.tblEightDayForecastTable);
-        forecastGraph = (GraphView) findViewById(R.id.forecastGraph);
+        forecastGraph = (LineChart) findViewById(R.id.forecastGraph);
+        dayDate = (TextView) findViewById(R.id.dayDate);
+        dayMin = (TextView) findViewById(R.id.showMin);
+        dayMax = (TextView) findViewById(R.id.showMax);
+        dayWth = (TextView) findViewById(R.id.showDescription);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         Typeface montserratBold = Typeface.createFromAsset(getAssets(), "fonts/montserrat_bold.ttf");
         Typeface robotoRegular = Typeface.createFromAsset(getAssets(), "fonts/roboto_regular.ttf");
+        forecastGraph.setOnChartGestureListener(this);
+        forecastGraph.setOnChartValueSelectedListener(this);
 
         weatherTitle.setText("WEATHER");
 
@@ -95,6 +125,10 @@ public class Weather extends AppCompatActivity {
         tvMaxTemp.setTypeface(robotoRegular);
         tvPrecipitation.setTypeface(robotoRegular);
         tvHumidity.setTypeface(robotoRegular);
+        dayDate.setTypeface(robotoRegular);
+        dayMin.setTypeface(robotoRegular);
+        dayMax.setTypeface(robotoRegular);
+        dayWth.setTypeface(robotoRegular);
 
         long date = System.currentTimeMillis();
         //april 26 2017
@@ -102,68 +136,13 @@ public class Weather extends AppCompatActivity {
         dataForWeatherDate = sdf.format(date).toUpperCase();
         weatherData.setText("TODAY, " + dataForWeatherDate);
 
-        try {
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather", "8", "1").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        currentWeatherObject = WeatherObject.CreateCurrentWeatherObject(this.getApplicationContext());
 
-        String[] objectData = receivedData.split(";");
+        if (currentWeatherObject != null) {
+            connection = true;
+            eightDayForecastList = WeatherObject.CreateEightDayForecastList(this.getApplicationContext());
+            thirtyDayForecastList = WeatherObject.CreateThirtyDayForecastList(this.getApplicationContext());
 
-        try {
-            currentWeatherObject = new WeatherObject(objectData[0], objectData[1], objectData[2], objectData[3], objectData[4], objectData[5], objectData[6], objectData[7]);
-        } catch (Exception e) {
-            currentWeatherObject = null;
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        try {
-            shortReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("WeatherForecast", "6", "8", "1,2,3,6").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        String[] shortForecastData = shortReceivedForecastData.split(";");
-
-        eightDayForecastList = new ArrayList<String>();
-        String concat;
-
-        try {
-            for (int i = 0; i < 32; i = i + 4) {
-                concat = shortForecastData[i].substring(8) + ";" + shortForecastData[i + 2].substring(0, shortForecastData[i + 2].indexOf(".")) + ";" + shortForecastData[i + 1].substring(0, shortForecastData[i + 1].indexOf(".")) + ";" + shortForecastData[i + 3];
-                eightDayForecastList.add(concat);
-            }
-        } catch (Exception e) {
-            eightDayForecastList = null;
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        try {
-            longReceivedForecastData = new AsyncServerAccess(this.getApplicationContext()).execute("ThirtyDayForecast", "3", "30").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        String[] longForecastData = longReceivedForecastData.split(";");
-        thirtyDayForecastList = new ArrayList<String>();
-
-        try {
-            for (int i = 0; i < 90; i = i + 3) {
-                longForecastConcat = longForecastData[i] + ";" + longForecastData[i + 1] + ";" + longForecastData[i + 2];
-                thirtyDayForecastList.add(longForecastConcat);
-            }
-        } catch (Exception e) {
-            thirtyDayForecastList = null;
-        }
-
-        if (currentWeatherObject != null)
-        {
             dataForCurrentTemp = String.valueOf(currentWeatherObject.getCurrentTemp());
             convertFloat = (int) (currentWeatherObject.getPrecipitation() * 100);
             dataForMinTemp = String.valueOf(currentWeatherObject.getMinTemp());
@@ -215,10 +194,13 @@ public class Weather extends AppCompatActivity {
 
                         if (r == 0) {
                             textViewArray[r][c].setText(day[c]);
+                            textViewArray[r][c].setTypeface(robotoRegular);
                         } else if (r == 1) {
                             textViewArray[r][c].setText(min[c]);
+                            textViewArray[r][c].setTypeface(robotoRegular);
                         } else {
                             textViewArray[r][c].setText(max[c]);
+                            textViewArray[r][c].setTypeface(robotoRegular);
                         }
                     }
                 }
@@ -232,41 +214,178 @@ public class Weather extends AppCompatActivity {
                 i++;
             }
 
-            forecastGraph.getViewport().setYAxisBoundsManual(true);
-            //forecastGraph.getViewport().setMaxY(100);
-            //forecastGraph.getViewport().setMinY(0);
+            setData();
+            Legend l = forecastGraph.getLegend();
+            l.setForm(Legend.LegendForm.LINE);
 
-            LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(generateData());
-            forecastGraph.addSeries(forecastSeries);
+            forecastGraph.setTouchEnabled(true);
+            forecastGraph.setDragEnabled(true);
+            forecastGraph.setScaleEnabled(true);
 
-            forecastSeries.setColor(Color.BLACK);
-            forecastSeries.setDrawDataPoints(true);
 
-            forecastGraph.setBackgroundColor(Color.GREEN);
-            forecastGraph.getViewport().setScalable(true);
-            forecastGraph.getViewport().setScalable(true);
+            YAxis leftAxis = forecastGraph.getAxisLeft();
+            leftAxis.setAxisMaxValue(highest);
+            leftAxis.setAxisMinValue(0f);
+            //leftAxis.setYOffset(20f);
+            leftAxis.enableGridDashedLine(10f, 10f, 0f);
+            leftAxis.setDrawZeroLine(false);
 
-            forecastGraph.getGridLabelRenderer().setTextSize(40);
-            forecastGraph.getGridLabelRenderer().setGridColor(Color.GREEN);
-        }
-        else
-        {
-            weatherData.setText("No internet connection");
+            // limit lines are drawn behind data (and not on top)
+            leftAxis.setDrawLimitLinesBehindData(true);
+
+            forecastGraph.getAxisRight().setEnabled(false);
+
+            forecastGraph.invalidate();
+        } else {
+            confirmConnection(Weather.this);
         }
     }
 
-    private DataPoint[] generateData()
+    private void setData()
     {
-        DataPoint[] values = new DataPoint[thirtyDay.length];
-        for(i = 0; i < thirtyDay.length; i++)
+        ArrayList<String> xVals = setXAxisValues();
+        ArrayList<Entry> yVals = setYAxisValues();
+
+        LineDataSet setOne;
+
+        setOne = new LineDataSet(yVals, "");
+        setOne.setColor(Color.WHITE);
+        setOne.setCircleColor(Color.BLACK);
+        setOne.setLineWidth(1f);
+        setOne.setCircleRadius(3f);
+        setOne.setDrawCircleHole(false);
+        setOne.setValueTextSize(9f);
+        setOne.setDrawFilled(true);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setOne);
+
+        LineData data = new LineData(xVals, dataSets);
+        forecastGraph.setData(data);
+        forecastGraph.getLegend().setEnabled(false);
+    }
+
+    private ArrayList<String> setXAxisValues ()
+    {
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for(String day : thirtyDay)
         {
-            double convert = Double.parseDouble(thirtyPrecipitation[i]) * 100;
-            int x = Integer.parseInt(thirtyDay[i]);
-            int y = (int)convert;
-            DataPoint v = new DataPoint(x, y);
-            values[i] = v;
+            xVals.add(day);
         }
 
-        return values;
+        return xVals;
+    }
+
+    private ArrayList<Entry> setYAxisValues()
+    {
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        int pos = 0;
+        double convert;
+        highest = 0;
+
+       for(String data : thirtyPrecipitation)
+        {
+            convert = Double.parseDouble(data);
+            convert = Math.ceil(convert);
+
+            yVals.add(new Entry((int) convert, pos));
+            if((int) convert > highest)
+            {
+                highest = (int) convert;
+            }
+            pos++;
+        }
+
+        return yVals;
+    }
+
+    private void confirmConnection(Activity context) {
+        final AlertDialog alert = new AlertDialog.Builder(
+                new ContextThemeWrapper(context, R.style.AppTheme))
+                .create();
+        alert.setTitle("Connection Error");
+        alert.setMessage("No internet connection");
+        alert.setCancelable(false);
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        connection = false;
+                        alert.dismiss();
+                    }
+                });
+
+        alert.show();
+    }
+
+    @Override
+    public void onChartGestureStart(MotionEvent me,
+                                    ChartTouchListener.ChartGesture
+                                            lastPerformedGesture) {
+
+        Log.i("Gesture", "START, x: " + me.getX() + ", y: " + me.getY());
+    }
+
+    @Override
+    public void onChartGestureEnd(MotionEvent me,
+                                  ChartTouchListener.ChartGesture
+                                          lastPerformedGesture) {
+
+        Log.i("Gesture", "END, lastGesture: " + lastPerformedGesture);
+
+        // un-highlight values after the gesture is finished and no single-tap
+        if (lastPerformedGesture != ChartTouchListener.ChartGesture.SINGLE_TAP)
+            // or highlightTouch(null) for callback to onNothingSelected(...)
+            forecastGraph.highlightValues(null);
+    }
+
+    @Override
+    public void onChartLongPressed(MotionEvent me) {
+        Log.i("LongPress", "Chart longpressed.");
+    }
+
+    @Override
+    public void onChartDoubleTapped(MotionEvent me) {
+        Log.i("DoubleTap", "Chart double-tapped.");
+    }
+
+    @Override
+    public void onChartSingleTapped(MotionEvent me) {
+        Log.i("SingleTap", "Chart single-tapped.");
+    }
+
+    @Override
+    public void onChartFling(MotionEvent me1, MotionEvent me2,
+                             float velocityX, float velocityY) {
+        Log.i("Fling", "Chart flinged. VeloX: "
+                + velocityX + ", VeloY: " + velocityY);
+    }
+
+    @Override
+    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+        Log.i("Scale / Zoom", "ScaleX: " + scaleX + ", ScaleY: " + scaleY);
+    }
+
+    @Override
+    public void onChartTranslate(MotionEvent me, float dX, float dY) {
+        Log.i("Translate / Move", "dX: " + dX + ", dY: " + dY);
+    }
+
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+        Log.i("Entry selected", e.toString());
+        Log.i("LOWHIGH", "low: " + forecastGraph.getLowestVisibleXIndex()
+                + ", high: " + forecastGraph.getHighestVisibleXIndex());
+
+        Log.i("MIN MAX", "xmin: " + forecastGraph.getXChartMin()
+                + ", xmax: " + forecastGraph.getXChartMax()
+                + ", ymin: " + forecastGraph.getYChartMin()
+                + ", ymax: " + forecastGraph.getYChartMax());
+    }
+
+    @Override
+    public void onNothingSelected() {
+        Log.i("Nothing selected", "Nothing selected.");
     }
 }

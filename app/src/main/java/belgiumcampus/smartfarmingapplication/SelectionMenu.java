@@ -76,7 +76,7 @@ public class SelectionMenu extends AppCompatActivity {
 IrrigationObject.GetHistory(getApplicationContext());
 
 
-
+//
 
        String receivedData = WeatherObject.SelectionMenuDisplay(this.getApplicationContext(),dataForDateDayTownTemp);
 

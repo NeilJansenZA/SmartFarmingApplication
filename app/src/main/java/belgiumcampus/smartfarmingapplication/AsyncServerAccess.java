@@ -17,7 +17,7 @@ import java.sql.Statement;
 /**
  * Created by Pieter on 21/02/2017.
  */
-
+//
 
 public class AsyncServerAccess extends AsyncTask<String,Void,String>
 {

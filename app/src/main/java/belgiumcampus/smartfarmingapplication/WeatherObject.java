@@ -194,7 +194,7 @@ longReceivedForecastData = "error";
 
 thirtyDayForecastList = new ArrayList<>();
         return thirtyDayForecastList;
-
+//
     }
 
     public  static  String SelectionMenuDisplay(Context context, String currentDate)

@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by Pieter on 05/05/2017.
  */
-
+//
 public class CropGrowthObject {
 
     public static String getAverageSize(Context context)

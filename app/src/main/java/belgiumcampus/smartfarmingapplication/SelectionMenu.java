@@ -124,42 +124,11 @@ public class SelectionMenu extends AppCompatActivity {
     {
         @Override
         public void run() {
-            readData();
+      WeatherObject.SelectionMenuDisplay(getApplicationContext(),dataForDateDayTownTemp);//could cause possible problems ?
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
     };
 
-    public void readData()
-    {
-        String receivedData = "No Data";
-        try
-        {
-            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
 
-        String [] Data = receivedData.split(";");
-
-        try
-        {
-            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "TownName";
-
-
-            dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
-
-        }
-        catch (Exception e)
-        {
-            Log.e("error:", e.getMessage());
-        }
-
-    }
 
 }

@@ -71,11 +71,20 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
     {
         String procedureName = params[0];
         int columns = new Integer(params[1]);
-        int rows = new Integer(params[2]);
+        int rows = 0;
         String specificColumns = null;
         if (params.length ==4)
         {
             specificColumns = params[3];
+        }
+        boolean flagReadAll = false;
+
+        if (params[2].equals("ALL"))
+        {
+            flagReadAll = true;
+        } else
+        {
+          rows = new Integer(params[2]);
         }
         String resultStringConcatenation = null;
 
@@ -95,7 +104,55 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
 
                 resultStringConcatenation = new String();
 
-                if (specificColumns != null)
+
+                if (flagReadAll && specificColumns != null)
+                {
+
+                    do {
+
+                        for (int c = 0; c < columns; c++)
+                        {
+                            if (specificColumns.contains(String.valueOf(c+1))) {
+                                String addition = rs.getString(c + 1);
+                                if (resultStringConcatenation == null) {
+                                    resultStringConcatenation = addition + ";";
+                                } else {
+                                    resultStringConcatenation += addition + ";";
+                                }
+                            }
+                        }
+
+
+                    }while (rs.next());
+                    DB.close();
+                }
+                else if(flagReadAll && specificColumns == null)
+                {
+//
+                    do {
+
+
+
+                            for (int c = 0; c < columns; c++)
+                            {
+                                String addition = rs.getString(c+1);
+                                if (resultStringConcatenation == null)
+                                {
+                                    resultStringConcatenation = addition +";";
+                                }
+                                else
+                                {
+                                    resultStringConcatenation +=  addition+ ";" ;
+                                }
+                            }
+
+
+
+                    }while (rs.next());
+                    DB.close();
+
+                }
+                else if (!flagReadAll && specificColumns != null)
                 {
 
                     for (int i = 0; i < rows; i++)
@@ -113,8 +170,9 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
                         }
                         rs.next();
                     }
+                    DB.close();
 
-                }else
+                }else if (!flagReadAll && specificColumns == null)
                 {
                     for (int i = 0; i < rows; i++)
                     {
@@ -132,18 +190,20 @@ public class AsyncServerAccess extends AsyncTask<String,Void,String>
                         }
                         rs.next();
                     }
+                    DB.close();
                 }
 
 
 
 
-                DB.close(); // might give possible problems ?
+
             }
         }
         catch (Exception ex)
         {
             resultStringConcatenation = "SQL Query Failed! " + ex.getMessage();
         }
+
 
         return  resultStringConcatenation;
 

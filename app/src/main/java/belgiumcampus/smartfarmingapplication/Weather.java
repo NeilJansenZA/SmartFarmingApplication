@@ -69,6 +69,7 @@ public class Weather extends AppCompatActivity {
        eightDayForecastList = WeatherObject.CreateEightDayForecastList(this.getApplicationContext());
 
       thirtyDayForecastList = WeatherObject.CreateThirtyDayForecastList(this.getApplicationContext());
+        int a = 0;
 
 
 

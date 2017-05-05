@@ -12,8 +12,8 @@ public class CropGrowthObject {
     {
 
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData =  dataAccess.readData(context,"AverageSize_SP",  "1"   ,"1","0");
+
+        receivedData =  DataAccess.readData(context,"AverageSize_SP",  "1"   ,"1","0");
         return receivedData;
     }
 
@@ -21,8 +21,8 @@ public class CropGrowthObject {
     {
 
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData =  dataAccess.readData(context,"dailyDiff_SP",  "1"   ,"1","0");
+
+        receivedData =  DataAccess.readData(context,"dailyDiff_SP",  "1"   ,"1","0");
         return receivedData;
     }
 
@@ -30,8 +30,8 @@ public class CropGrowthObject {
     {
 
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData =  dataAccess.readData(context,"weeklyDiff_SP",  "1"   ,"1","0");
+
+        receivedData =  DataAccess.readData(context,"weeklyDiff_SP",  "1"   ,"1","0");
         return receivedData;
     }
 
@@ -39,8 +39,8 @@ public class CropGrowthObject {
     {
 
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData =  dataAccess.readData(context,"WeeksGrowth_SP",  "1"   ,"1","0");
+
+        receivedData =  DataAccess.readData(context,"WeeksGrowth_SP",  "1"   ,"1","0");
         return receivedData;
     }
 }

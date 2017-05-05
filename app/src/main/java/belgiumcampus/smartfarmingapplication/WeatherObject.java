@@ -197,4 +197,26 @@ thirtyDayForecastList = new ArrayList<>();
 
     }
 
+    public  static  String SelectionMenuDisplay(Context context, String currentDate)
+    {
+        String receivedData = DataAccess.readData(context,"CurrentWeather",  "3"   ,"1",null);
+
+        String displayString = "";
+
+        try {
+            String [] Data = receivedData.split(";");
+
+            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
+            String townName = "TownName";
+
+
+            displayString = String.format("%s \n%s %s°C",currentDate ,townName, String.valueOf(currentTemp));
+
+        }catch (Exception e)
+        {
+            displayString = "No internet";
+
+        }
+        return  displayString;
+    }
 }

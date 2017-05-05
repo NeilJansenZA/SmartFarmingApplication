@@ -12,11 +12,9 @@ public class DataAccess {
 
 
 
-    public DataAccess() {
 
-    }
 
-    public String readData(Context context,String methodName, String Columns, String Rows, String SpecificColumns)
+    public static String readData(Context context,String methodName, String Columns, String Rows, String SpecificColumns)
     {
         String receivedData = "No;Data";
 

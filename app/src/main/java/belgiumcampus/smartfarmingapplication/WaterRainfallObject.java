@@ -19,17 +19,17 @@ public class WaterRainfallObject {
      {
 
          String receivedData = "No;Data";
-         DataAccess dataAccess = new DataAccess();
+
                                                      //procedure name           //columns  //rows //specific column
-        receivedData =  dataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,    "1",      "0");
+        receivedData =  DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,    "1",      "0");
      return receivedData;
      }
 
     public static  String getCurrentLevel(Context context)
     {
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData =  dataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,"1","1");
+
+        receivedData =  DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,"1","1");
         return receivedData;
     }
 
@@ -39,8 +39,8 @@ public class WaterRainfallObject {
 
 
         String receivedData = "No;Data";
-        DataAccess dataAccess = new DataAccess();
-        receivedData = dataAccess.readData(context,"sp_ShowLatestRainfallValue",  "2"   ,"7","1,2");
+
+        receivedData = DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "2"   ,"7","1,2");
 
         ArrayList<String> listOfGraphData = new ArrayList<>();
 

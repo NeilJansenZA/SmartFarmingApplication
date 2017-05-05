@@ -73,7 +73,7 @@ public class SelectionMenu extends AppCompatActivity {
 
         startRepeatingTask();
 
-
+IrrigationObject.GetHistory(getApplicationContext());
 
 
 

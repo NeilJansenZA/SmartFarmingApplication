@@ -108,9 +108,9 @@ public class WeatherObject {
 
     public static WeatherObject CreateCurrentWeatherObject(Context context)
     {
-        DataAccess dataAccess = new DataAccess();
 
-        String[] objectData = dataAccess.readData(context,"CurrentWeather",  "8"   ,"1",null).split(";");
+
+        String[] objectData = DataAccess.readData(context,"CurrentWeather",  "8"   ,"1",null).split(";");
           WeatherObject currentWeatherObject = new WeatherObject();
         try {
             currentWeatherObject = new WeatherObject(objectData[0],objectData[1],objectData[2],objectData[3],objectData[4],objectData[5],objectData[6],objectData[7]);
@@ -124,30 +124,35 @@ return  currentWeatherObject;
 
 public static ArrayList<String> CreateEightDayForecastList(Context context)
 {
-    DataAccess dataAccess = new DataAccess();
+
 
     ArrayList<String> eightDayForecastList;
     String shortReceivedForecastData = "No;Data";
     try {
 
-        shortReceivedForecastData = new AsyncServerAccess(context).execute("WeatherForecast",  "6"   ,"8","1,2,3,6").get();
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    } catch (ExecutionException e) {
-        e.printStackTrace();
-    }
-    String[] shortForecastData = shortReceivedForecastData.split(";");
-    eightDayForecastList = new ArrayList<String>();
-    String concat;
-    try {
-        for (int i = 0; i < 32; i= i+4) {
-            concat = shortForecastData[i].substring(8) +";"+ shortForecastData[i +2].substring(0,shortForecastData[i +2].indexOf(".")) + ";" + shortForecastData[i+1].substring(0,shortForecastData[i +1].indexOf(".")) + ";" + shortForecastData[i+3];
-            eightDayForecastList.add( concat);
-        }
+        shortReceivedForecastData = DataAccess.readData(context, "WeatherForecast", "6", "8", "1,2,3,6");
     }catch (Exception e)
     {
-        eightDayForecastList = null;
+shortReceivedForecastData = "error";
     }
+
+    if (!shortReceivedForecastData.equals("error"))
+    {
+        String[] shortForecastData = shortReceivedForecastData.split(";");
+        eightDayForecastList = new ArrayList<String>();
+        String concat;
+        try {
+            for (int i = 0; i < 32; i= i+4) {
+                concat = shortForecastData[i].substring(8) +";"+ shortForecastData[i +2].substring(0,shortForecastData[i +2].indexOf(".")) + ";" + shortForecastData[i+1].substring(0,shortForecastData[i +1].indexOf(".")) + ";" + shortForecastData[i+3];
+                eightDayForecastList.add( concat);
+            }
+        }catch (Exception e)
+        {
+eightDayForecastList= null;
+        }
+        return  eightDayForecastList;
+    }
+eightDayForecastList = new ArrayList<String>();
     return eightDayForecastList;
 }
 
@@ -159,29 +164,35 @@ public static ArrayList<String> CreateEightDayForecastList(Context context)
         ArrayList<String> thirtyDayForecastList;
 
         try {
-            longReceivedForecastData = new AsyncServerAccess(context).execute("ThirtyDayForecast",  "3"   ,"30").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            longReceivedForecastData =  DataAccess.readData(context,"ThirtyDayForecast",  "3"   ,"30",null);
         }
-
-        String[] longForecastData = longReceivedForecastData.split(";");
-        thirtyDayForecastList = new ArrayList<String>();
-
-        String longForecastConcat;
-        try {
-            for (int i = 0; i < 90; i= i+3) {
-
-                longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
-                thirtyDayForecastList.add(longForecastConcat);
-
-            }
-        }catch (Exception e)
+        catch (Exception e)
         {
-            thirtyDayForecastList = null;
+longReceivedForecastData = "error";
         }
 
+
+        if (!longReceivedForecastData.equals("error"))
+        {
+            String[] longForecastData = longReceivedForecastData.split(";");
+            thirtyDayForecastList = new ArrayList<String>();
+
+            String longForecastConcat;
+            try {
+                for (int i = 0; i < 90; i= i+3) {
+
+                    longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
+                    thirtyDayForecastList.add(longForecastConcat);
+
+                }
+            }catch (Exception e)
+            {
+                thirtyDayForecastList = null;
+            }
+            return  thirtyDayForecastList;
+        }
+
+thirtyDayForecastList = new ArrayList<>();
         return thirtyDayForecastList;
 
     }

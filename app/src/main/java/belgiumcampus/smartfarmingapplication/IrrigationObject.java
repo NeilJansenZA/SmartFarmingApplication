@@ -17,7 +17,7 @@ public class IrrigationObject {
 
         //procedure name           //columns  //rows //specific column
         receivedData =  DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,    "1",      "0");
-        return receivedData;
+        return receivedData.replace(";","");
     }
 
 
@@ -43,12 +43,12 @@ public class IrrigationObject {
             String[] Data = receivedData.split(";");
             irrigationHistoryList = new ArrayList<String>();
 
-            String longForecastConcat;
+            String historyConcat;
             try {
-                for (int i = 0; i < 90; i= i+3) {
+                for (int i = 0; i < Data.length; i= i+3) {
 
-                   // longForecastConcat = longForecastData[i] +";"+ longForecastData[i+1] +";"+ longForecastData[i+2];
-                   // thirtyDayForecastList.add(longForecastConcat);
+                    historyConcat = Data[i] +";"+ Data[i+1] +";"+ Data[i+2];
+                   irrigationHistoryList.add(historyConcat);
 
                 }
             }catch (Exception e)

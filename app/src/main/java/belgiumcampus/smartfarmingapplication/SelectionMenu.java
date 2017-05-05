@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SelectionMenu extends AppCompatActivity {
@@ -73,7 +74,6 @@ public class SelectionMenu extends AppCompatActivity {
 
         startRepeatingTask();
 
-IrrigationObject.GetHistory(getApplicationContext());
 
 
 //

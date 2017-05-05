@@ -78,23 +78,9 @@ public class SelectionMenu extends AppCompatActivity {
 
 
 
-        String receivedData = DataAccess.readData(this.getApplicationContext(),"CurrentWeather",  "3"   ,"1",null);
+       String receivedData = WeatherObject.SelectionMenuDisplay(this.getApplicationContext(),dataForDateDayTownTemp);
 
-
-        try {
-            String [] Data = receivedData.split(";");
-
-            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "TownName";
-
-
-            dateDayTownTemp.setText(String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, String.valueOf(currentTemp)));
-
-        }catch (Exception e)
-        {
-            dateDayTownTemp.setText("No internet connection");
-
-        }
+        dateDayTownTemp.setText(receivedData);
 
 
     }

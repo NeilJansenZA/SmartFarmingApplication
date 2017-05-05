@@ -75,18 +75,11 @@ public class SelectionMenu extends AppCompatActivity {
 
 
 
-        String receivedData = "No Data";
-        try
-        {
-            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
+
+
+
+        String receivedData = DataAccess.readData(this.getApplicationContext(),"CurrentWeather",  "3"   ,"1",null);
+
 
         try {
             String [] Data = receivedData.split(";");
@@ -100,17 +93,6 @@ public class SelectionMenu extends AppCompatActivity {
         }catch (Exception e)
         {
             dateDayTownTemp.setText("No internet connection");
-
-            //AlertDialog.Builder builder = new AlertDialog.Builder(this);
-           // builder.setMessage("No internet connection!")
-           //         .setCancelable(false)
-           //         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-           //             public void onClick(DialogInterface dialog, int id) {
-           //                 finish();
-           //             }
-           //         });
-           // AlertDialog alert = builder.create();
-           // alert.show();
 
         }
 

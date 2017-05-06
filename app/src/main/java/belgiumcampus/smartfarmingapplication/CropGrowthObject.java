@@ -13,8 +13,8 @@ public class CropGrowthObject {
 
         String receivedData = "No;Data";
 
-        receivedData =  DataAccess.readData(context,"AverageSize_SP",  "1"   ,"1","0");
-        return receivedData;
+        receivedData =  DataAccess.readData(context,"AverageSize_SP",  "1"   ,"1","1");
+        return receivedData.replace(";","").trim();
     }
 
     public static String getDailyDifference(Context context)
@@ -22,8 +22,8 @@ public class CropGrowthObject {
 
         String receivedData = "No;Data";
 
-        receivedData =  DataAccess.readData(context,"dailyDiff_SP",  "1"   ,"1","0");
-        return receivedData;
+        receivedData =  DataAccess.readData(context,"dailyDiff_SP",  "1"   ,"1","1");
+        return receivedData.replace(";","").trim();
     }
 
     public static String getWeeklyDifference(Context context)
@@ -31,8 +31,8 @@ public class CropGrowthObject {
 
         String receivedData = "No;Data";
 
-        receivedData =  DataAccess.readData(context,"weeklyDiff_SP",  "1"   ,"1","0");
-        return receivedData;
+        receivedData =  DataAccess.readData(context,"weeklyDiff_SP",  "1"   ,"1","1");
+        return receivedData.replace(";","").trim();
     }
 
     public static String getWeeksGrowth(Context context)
@@ -40,7 +40,7 @@ public class CropGrowthObject {
 
         String receivedData = "No;Data";
 
-        receivedData =  DataAccess.readData(context,"WeeksGrowth_SP",  "1"   ,"1","0");
-        return receivedData;
+        receivedData =  DataAccess.readData(context,"WeeksGrowth_SP",  "1"   ,"1","1");
+        return receivedData.replace(";","").trim();
     }
 }

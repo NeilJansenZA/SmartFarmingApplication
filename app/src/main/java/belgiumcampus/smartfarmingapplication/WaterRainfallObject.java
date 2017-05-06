@@ -19,40 +19,55 @@ public class WaterRainfallObject {
     {
 
         String receivedData = "No;Data";
-
-        //procedure name           //columns  //rows //specific column
-        receivedData =  DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,    "1",      "0");
+        try {
+            //procedure name           //columns  //rows //specific column
+            receivedData = DataAccess.readData(context, "sp_ShowLatestWaterTableValue", "3", "1", "2");
+        }
+        catch (Exception e)
+        {
+            receivedData = "No internet";
+        }
         return receivedData;
     }
-
+    ////
     public static  String getCurrentLevel(Context context)
     {
         String receivedData = "No;Data";
-
-        receivedData =  DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "1"   ,"1","1");
-        return receivedData;
-    }
-
-
-    public ArrayList<String> getGraphData(Context context)
-    {
-
-
-        String receivedData = "No;Data";
-
-        receivedData = DataAccess.readData(context,"sp_ShowLatestRainfallValue",  "2"   ,"7","1,2");
-
-        ArrayList<String> listOfGraphData = new ArrayList<>();
-
-
-        String [] temp = receivedData.split(";");
-        for (String item:temp)
+        try
         {
-            listOfGraphData.add(item);
-
+            receivedData =  DataAccess.readData(context,"sp_ShowLatestWaterTableValue",  "1"   ,"1","1");
+        }
+        catch(Exception e)
+        {
+            receivedData = "No Internet";
         }
 
-        return  listOfGraphData;
+        return receivedData.replace(";","").trim();
     }
 
+
+    public static ArrayList<String> getGraphData(Context context)
+    {
+        String receivedData = "No;Data";
+        ArrayList<String> listOfGraphData = new ArrayList<>();
+
+        try {
+            receivedData = DataAccess.readData(context, "sp_ShowLatestRainfallValue", "2", "7", "1,2");
+
+            String [] temp = receivedData.split(";");
+
+            for (int i = 0; i <  14; i = i+2)
+            {
+                listOfGraphData.add(temp[i] +";" + temp[i+1]);
+            }
+        }
+        catch(Exception e)
+        {
+            listOfGraphData = null;
+        }
+            return  listOfGraphData;
+
+
+    }
+///
 }

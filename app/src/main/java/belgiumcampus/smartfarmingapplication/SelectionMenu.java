@@ -20,11 +20,11 @@ import java.util.concurrent.ExecutionException;
 
 public class SelectionMenu extends AppCompatActivity {
 
-    Button weatherB, waterTableB, irrigationB, cropGrowthB, soilMoistureB, aboutB;
-    Intent weather, waterTable, irriagation, cropGrowth, soilMousture, about;
-    TextView dateDayTownTemp;
-    String dataForDateDayTownTemp;
-    Boolean connection = true;
+    private Button weatherB, waterTableB, irrigationB, cropGrowthB, soilMoistureB, aboutB;
+    private Intent weather, waterTable, irriagation, cropGrowth, soilMoisture, about;
+    private TextView dateDayTownTemp;
+    private String dataForDateDayTownTemp;
+    private Boolean connection = true;
 
     private final static int INTERVAL = 60 * 60 * 1000; //0.30
     Handler mHandler = new Handler();
@@ -47,7 +47,11 @@ public class SelectionMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection_menu);
+        loadActivity();
+    }
 
+    protected void loadActivity()
+    {
         weatherB = (Button) findViewById(R.id.weatherButton);
         waterTableB = (Button) findViewById(R.id.waterTableAndRainfallButton);
         irrigationB = (Button) findViewById(R.id.irrigationButton);
@@ -107,11 +111,25 @@ public class SelectionMenu extends AppCompatActivity {
         }
     }
 
+    public void switchToWaterTableAndRainfall(View v)
+    {
+        if(connection)
+        {
+            waterTable = new Intent(getApplicationContext(), WaterRainfall.class);
+            startActivity(waterTable);
+        }
+        else
+        {
+            confirmConnection(SelectionMenu.this);
+        }
+    }
+
     public void switchToIrrigation(View v)
     {
         if(connection)
         {
-
+            irriagation = new Intent(getApplicationContext(), Irrigation.class);
+            startActivity(irriagation);
         }
         else
         {
@@ -136,7 +154,8 @@ public class SelectionMenu extends AppCompatActivity {
     {
         if(connection)
         {
-
+            soilMoisture = new Intent(getApplicationContext(), SoilMoisture.class);
+            startActivity(soilMoisture);
         }
         else
         {
@@ -148,7 +167,8 @@ public class SelectionMenu extends AppCompatActivity {
     {
         if(connection)
         {
-
+            about = new Intent(getApplicationContext(), About.class);
+            startActivity(about);
         }
         else
         {
@@ -161,42 +181,10 @@ public class SelectionMenu extends AppCompatActivity {
     {
         @Override
         public void run() {
-            readData();
+            WeatherObject.SelectionMenuDisplay(getApplicationContext(),dataForDateDayTownTemp);//could cause possible problems ?
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
     };
-
-    public void readData()
-    {
-        String receivedData = "No Data";
-        try
-        {
-            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
-
-        String [] Data = receivedData.split(";");
-
-        try
-        {
-            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "Venda";
-
-            String display = String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, currentTemp);
-            dateDayTownTemp.setText(display);
-        }
-        catch (Exception e)
-        {
-            Log.e("error:", e.getMessage());
-        }
-
-    }
 
     private void confirmConnection(Activity context)
     {

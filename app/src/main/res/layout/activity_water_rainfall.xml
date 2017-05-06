@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_water_rainfall"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WaterRainfall"
+    android:background="@drawable/watermark"
+    android:fitsSystemWindows="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/waterRainfallConstraint">
+
+        <include layout="@layout/appbar"
+            android:id="@+id/waterRainfallToolbar" />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/watertable_current_level_card"
+            android:id="@+id/imgCurrentWaterLevelCard"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/waterRainfallToolbar"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/high"
+            android:id="@+id/imgWaterLevel"
+            app:layout_constraintTop_toTopOf="@+id/imgCurrentWaterLevelCard"
+            app:layout_constraintRight_toRightOf="@+id/imgCurrentWaterLevelCard"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:text="HIGH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvHigh"
+            android:textColor="#464646"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@+id/imgCurrentWaterLevelCard"
+            app:layout_constraintRight_toRightOf="@+id/tvMedium"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:text="MEDIUM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMedium"
+            android:textColor="#464646"
+            android:textSize="16sp"
+            app:layout_constraintRight_toLeftOf="@+id/imgWaterLevel"
+            app:layout_constraintTop_toBottomOf="@+id/tvHigh"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:text="LOW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvLow"
+            android:textColor="#464646"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvMedium"
+            app:layout_constraintRight_toLeftOf="@+id/imgWaterLevel" />
+
+        <TextView
+            android:text="CURRENT &#xa; WATER &#xa; LEVEL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCurrentWaterLevelLabel"
+            android:textColor="#464646"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@+id/imgCurrentWaterLevelCard"
+            app:layout_constraintLeft_toLeftOf="@+id/imgCurrentWaterLevelCard"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="RECOMMENDATION"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#464646"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/tvWaterRainfallRecommendationTitle"
+            app:layout_constraintTop_toBottomOf="@+id/imgCurrentWaterLevelCard"
+            android:layout_marginTop="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/watertable_recommendation_card"
+            android:id="@+id/imgRecommendationCard"
+            app:layout_constraintTop_toBottomOf="@+id/tvWaterRainfallRecommendationTitle"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRecommendation"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@+id/imgRecommendationCard"
+            app:layout_constraintRight_toRightOf="@+id/imgRecommendationCard"
+            app:layout_constraintLeft_toLeftOf="@+id/imgRecommendationCard"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp" />
+
+        <TextView
+            android:text="RAINFALL MEASUREMENT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#464646"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:id="@+id/tvRainfallMeasurementTitle"
+            app:layout_constraintTop_toBottomOf="@+id/imgRecommendationCard"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="368dp"
+            android:layout_height="368dp"
+            android:id="@+id/rainfallGraph"
+            app:layout_constraintTop_toBottomOf="@+id/tvRainfallMeasurementTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/watertable_graph_card"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/reload_button"
+            android:scaleType="center"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/fabWaterRainfallRefresh"
+            android:onClick="Restart"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

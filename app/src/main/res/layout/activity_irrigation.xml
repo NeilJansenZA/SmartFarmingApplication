@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_irrigation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/watermark"
+    android:fitsSystemWindows="true"
+    tools:context=".Irrigation">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/irrigationConstraint">
+
+    <include layout="@layout/appbar"
+        android:id="@+id/irrigationToolbar" />
+
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#464646"
+            android:textSize="20sp"
+            android:id="@+id/irrigationTodayDate"
+            android:gravity="left"
+            app:layout_constraintTop_toTopOf="@+id/irrigationToolbar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="96dp"
+            android:layout_marginStart="16dp" />
+        <View
+            android:layout_width="384dp"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:id="@+id/vDateSeparator"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/irrigationToolbar"
+            android:layout_marginTop="128dp"
+            app:layout_constraintLeft_toRightOf="@+id/irrigationTodayDate"
+            app:layout_constraintHorizontal_bias="0.33" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/irrigation_card"
+            android:id="@+id/imgIrrigationCard"
+            app:layout_constraintTop_toBottomOf="@+id/irrigationTodayDate"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:text="BANANA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvtIrrigationCropBananaTitle"
+            app:layout_constraintTop_toTopOf="@+id/imgIrrigationCard"
+            app:layout_constraintLeft_toLeftOf="@+id/imgIrrigationCard"
+            app:layout_constraintRight_toRightOf="@+id/imgIrrigationCard"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_marginTop="32dp" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBananaIrrigationAmount"
+            app:layout_constraintLeft_toLeftOf="@+id/imgIrrigationCard"
+            app:layout_constraintRight_toRightOf="@+id/imgIrrigationCard"
+            android:textColor="#464646"
+            android:textSize="60sp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/tvtIrrigationCropBananaTitle" />
+
+        <Button
+            android:text="HISTORY"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:id="@+id/btnIrrigationHistory"
+            android:background="@drawable/irrigation_history_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgIrrigationCard"
+            android:layout_marginTop="16dp"
+            android:textColor="#464646"
+            android:textSize="28sp"
+            android:onClick="viewIrrigationHistory"/>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

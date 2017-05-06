@@ -2,6 +2,7 @@ package belgiumcampus.smartfarmingapplication;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -50,24 +51,24 @@ public class Weather extends AppCompatActivity implements
         OnChartGestureListener,
         OnChartValueSelectedListener {
 
-    TextView weatherTitle, weatherData, tvCurrentTemp, tvMinTemp, tvMaxTemp, tvPrecipitation, tvHumidity, tvWeeklyForecast, tv30DayForecast, dayDate, dayMin, dayMax, dayWth;
-    String dataForWeatherDate, dataForCurrentTemp, dataForMinTemp, dataForMaxTemp, dataForPrecipitation, dataForHumidity;
-    LineChart forecastGraph;
-    WeatherObject currentWeatherObject;
-    View vAppBar;
-    ArrayList<String> eightDayForecastList, thirtyDayForecastList; /* "this list contains the following values: 01;20;30;Sunny Day;Min;Max;Description"
+    private TextView weatherTitle, weatherData, tvCurrentTemp, tvMinTemp, tvMaxTemp, tvPrecipitation, tvHumidity, tvWeeklyForecast, tv30DayForecast, dayDate, dayMin, dayMax, dayWth;
+    private String dataForWeatherDate, dataForCurrentTemp, dataForMinTemp, dataForMaxTemp, dataForPrecipitation, dataForHumidity;
+    private LineChart forecastGraph;
+    private WeatherObject currentWeatherObject;
+    private View vAppBar;
+    private ArrayList<String> eightDayForecastList, thirtyDayForecastList; /* "this list contains the following values: 01;20;30;Sunny Day;Min;Max;Description"
     - "this list contains the following values: 5;1;0.2; Month;day;precipitation"*/
-    int convertFloat, i, highest = 0;
-    ImageView imgWeatherIcon;
-    String[] splitData;
-    String[] day = new String[8];
-    String[] min = new String[8];
-    String[] max = new String[8];
-    String[] desc = new String[8];
-    String[] thirtyDay = new String[30];
-    String[] thirtyPrecipitation = new String[30];
-    TableLayout tblLayout;
-    Boolean connection = true;
+    private int convertFloat, i, highest = 0;
+    private ImageView imgWeatherIcon;
+    private String[] splitData;
+    private String[] day = new String[8];
+    private String[] min = new String[8];
+    private String[] max = new String[8];
+    private String[] desc = new String[8];
+    private String[] thirtyDay = new String[30];
+    private String[] thirtyPrecipitation = new String[30];
+    private TableLayout tblLayout;
+    private Boolean connection = true;
 
     int[][] tableRowFields = new int[][]
             {
@@ -221,7 +222,7 @@ public class Weather extends AppCompatActivity implements
             forecastGraph.setTouchEnabled(true);
             forecastGraph.setDragEnabled(true);
             forecastGraph.setScaleEnabled(true);
-
+            forecastGraph.setDescription("");
 
             YAxis leftAxis = forecastGraph.getAxisLeft();
             leftAxis.setAxisMaxValue(highest);
@@ -387,5 +388,18 @@ public class Weather extends AppCompatActivity implements
     @Override
     public void onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.");
+    }
+
+    public void Restart(View v)
+    {
+        onRestart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent weather = new Intent(Weather.this, Weather.class);
+        startActivity(weather);
+        finish();
     }
 }

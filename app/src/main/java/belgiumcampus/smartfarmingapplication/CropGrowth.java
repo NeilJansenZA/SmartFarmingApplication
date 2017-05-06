@@ -1,5 +1,6 @@
 package belgiumcampus.smartfarmingapplication;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,14 +10,21 @@ import android.widget.TextView;
 
 public class CropGrowth extends AppCompatActivity {
 
-    TextView vTitle, tvAverageTitle, tvCurrentTitle, tvDailyTitle, tvExpectedTitle, tvWeeklyTitle, tvCropType, tvAverage, tvCurrent, tvDaily, tvExpected, tvWeekly;
-    View vAppBar;
-    String averageData, currentData, dailyData, expectedData, weeklyData;
+    private TextView vTitle, tvAverageTitle, tvCurrentTitle, tvDailyTitle, tvExpectedTitle, tvWeeklyTitle, tvCropType, tvAverage, tvCurrent, tvDaily, tvExpected, tvWeekly;
+    private View vAppBar;
+    private String averageData, currentData, dailyData, expectedData, weeklyData;
+    private int averageDataInt, currentDataInt, dailyDataInt, expectedDataInt, weeklyDataInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_growth);
+        loadActivity();
+
+    }
+
+    protected void loadActivity()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.cropGrowthToolbar);
         setSupportActionBar(toolbar);
 
@@ -52,5 +60,46 @@ public class CropGrowth extends AppCompatActivity {
         tvDaily.setTypeface(robotoRegular);
         tvExpected.setTypeface(robotoRegular);
         tvWeekly.setTypeface(robotoRegular);
+
+        currentData = CropGrowthObject.getAverageSize(getApplicationContext());
+        dailyData = CropGrowthObject.getDailyDifference(getApplicationContext());
+        weeklyData = CropGrowthObject.getWeeklyDifference(getApplicationContext());
+        expectedData = CropGrowthObject.getWeeksGrowth(getApplicationContext());
+
+        try {
+            currentDataInt = Integer.parseInt(currentData);
+            dailyDataInt = Integer.parseInt(dailyData);
+            weeklyDataInt = Integer.parseInt(weeklyData);
+            expectedDataInt = Integer.parseInt(expectedData);
+            averageDataInt = (currentDataInt + dailyDataInt + weeklyDataInt + expectedDataInt) / 4;
+        }catch (Exception e)
+        {
+            averageDataInt = 0;
+        }
+
+        currentData += " mm";
+        dailyData += " mm";
+        weeklyData += " mm";
+        expectedData += " mm";
+        averageData = String.valueOf(averageDataInt) + " mm";
+
+        tvAverage.setText(averageData);
+        tvCurrent.setText(currentData);
+        tvWeekly.setText(weeklyData);
+        tvExpected.setText(expectedData);
+        tvDaily.setText(dailyData);
+    }
+
+    public void Restart(View v)
+    {
+        onRestart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent cropGrowth = new Intent(CropGrowth.this, CropGrowth.class);
+        startActivity(cropGrowth);
+        finish();
     }
 }

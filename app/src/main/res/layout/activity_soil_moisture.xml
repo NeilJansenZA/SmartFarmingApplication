@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_soil_moisture"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/watermark"
+    tools:context=".SoilMoisture">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/soilMoistureConstraint">
+
+        <include layout="@layout/appbar"
+            android:id="@+id/soilMoistureToolbar" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/soilmoisture_topcard"
+            android:id="@+id/imgSoilMoistureTopCard"
+            app:layout_constraintTop_toBottomOf="@+id/soilMoistureToolbar"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:text="OVERALL&#xa;MOISTURE&#xa;READING"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOverallMoistureReadingLabel"
+            android:textColor="#464646"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="@+id/imgSoilMoistureTopCard"
+            app:layout_constraintLeft_toLeftOf="@+id/imgSoilMoistureTopCard"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="80%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOverallReading"
+            app:layout_constraintTop_toTopOf="@+id/imgSoilMoistureTopCard"
+            app:layout_constraintRight_toRightOf="@+id/imgSoilMoistureTopCard"
+            android:layout_marginTop="24dp"
+            android:textColor="#464646"
+            android:textSize="60sp"
+            android:layout_marginEnd="48dp" />
+
+        <TextView
+            android:text="SENSOR INFORMATION"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSensorTitle"
+            android:textColor="#464646"
+            android:textSize="28sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/imgSoilMoistureTopCard"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/soilmoisture_bottomcard_dividers"
+            android:id="@+id/imgSensorInformation"
+            app:layout_constraintTop_toBottomOf="@+id/tvSensorTitle"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:text="SENSOR&#xa;READING"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSensorReadingTitle"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/imgSensorInformation"
+            android:layout_marginStart="70dp"
+            app:layout_constraintLeft_toLeftOf="@+id/imgSensorInformation"
+            android:layout_marginTop="50dp" />
+
+
+        <TextView
+            android:text="80%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSoilMoistureReading"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvSensorReadingTitle"
+            android:layout_marginStart="70dp"
+            app:layout_constraintLeft_toLeftOf="@+id/imgSensorInformation" />
+
+        <TextView
+            android:text="CONNECTION"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSensorConnectionTitle"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="@+id/imgSensorInformation"
+            app:layout_constraintRight_toRightOf="@+id/imgSensorInformation"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="40dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/soilmoisture_confour"
+            android:id="@+id/imgConnection"
+            app:layout_constraintTop_toTopOf="@+id/tvSensorConnectionTitle"
+            app:layout_constraintRight_toRightOf="@+id/imgSensorInformation"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:text="IDEAL&#xa;READING"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSensorIdealReadingTitle"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgSensorInformation"
+            app:layout_constraintTop_toBottomOf="@+id/tvSensorReadingTitle"
+            app:layout_constraintLeft_toLeftOf="@+id/imgSensorInformation"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:text="60%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvIdealReading"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvSensorIdealReadingTitle"
+            android:layout_marginStart="70dp"
+            app:layout_constraintLeft_toLeftOf="@+id/imgSensorInformation" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSoilMoistureRecommendation"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgSensorInformation"
+            app:layout_constraintTop_toBottomOf="@+id/tvSensorConnectionTitle"
+            app:layout_constraintRight_toRightOf="@+id/imgSensorInformation"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="50dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/reload_button"
+            android:scaleType="center"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/fabSoilMoistureRefresh"
+            android:onClick="Restart"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

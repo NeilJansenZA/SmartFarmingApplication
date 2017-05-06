@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".About"
+    android:background="@drawable/watermark">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/aboutConstraint">
+
+        <include layout="@layout/appbar"
+            android:id="@+id/aboutToolbar" />
+
+        <TextView
+            android:text="OUR MISSION"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOurMission"
+            app:layout_constraintTop_toBottomOf="@+id/aboutToolbar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#464646"
+            android:textSize="20sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:text="The “Smart Farm App” project is a complex problem with multiple technological, economic and social aspects. It is therefore organised in structural elements, i.e. sub-use projects, and has a long-term goals perspective. The master (parent) project consist of 6 sub-use (child) projects, which include a series of interrelated tasks to be performed over a fixed period of time and within certain cost, effort and other limitations. They are an integral part of the master project and thus are dependent on the other sub-use projects. Therefore, sharing information, experience, and impact is an essential prerequisite for a successful completion of the project.
+The ‘Smart Farm’ project components are in the early stages of development and will be advanced in later years.  Future classes will be able to continue to evaluate, test, and re-design prototypes to support the ongoing development of this project as well as other ‘Smart Farm’ projects, such as decision-making systems, water safety monitoring systems, collection and reuse of farm grey water, etc.
+"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvAboutInformation"
+            app:layout_constraintTop_toBottomOf="@+id/tvOurMission"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#464646"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.33" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

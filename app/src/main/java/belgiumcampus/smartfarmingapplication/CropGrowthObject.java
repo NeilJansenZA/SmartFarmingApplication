@@ -12,35 +12,52 @@ public class CropGrowthObject {
     {
 
         String receivedData = "No;Data";
-
-        receivedData =  DataAccess.readData(context,"AverageSize_SP",  "1"   ,"1","0");
-        return receivedData;
+        try
+        {
+            receivedData = DataAccess.readData(context, "AverageSize_SP", "1", "1", "1");
+        }catch (Exception e)
+        {
+            receivedData = "No Internet";
+        }
+        return receivedData.replace(";","").trim();
     }
 
     public static String getDailyDifference(Context context)
     {
 
         String receivedData = "No;Data";
-
-        receivedData =  DataAccess.readData(context,"dailyDiff_SP",  "1"   ,"1","0");
-        return receivedData;
+        try {
+            receivedData = DataAccess.readData(context, "dailyDiff_SP", "1", "1", "1");
+        } catch (Exception e)
+        {
+            receivedData = "No Internet";
+        }
+        return receivedData.replace(";","").trim();
     }
 
     public static String getWeeklyDifference(Context context)
     {
 
         String receivedData = "No;Data";
-
-        receivedData =  DataAccess.readData(context,"weeklyDiff_SP",  "1"   ,"1","0");
-        return receivedData;
+        try {
+            receivedData = DataAccess.readData(context, "weeklyDiff_SP", "1", "1", "1");
+        }catch (Exception e)
+        {
+            receivedData = "No Internet";
+        }
+        return receivedData.replace(";","").trim();
     }
 
     public static String getWeeksGrowth(Context context)
     {
 
         String receivedData = "No;Data";
-
-        receivedData =  DataAccess.readData(context,"WeeksGrowth_SP",  "1"   ,"1","0");
-        return receivedData;
+        try {
+            receivedData = DataAccess.readData(context, "WeeksGrowth_SP", "1", "1", "1");
+        }catch (Exception e)
+        {
+            receivedData = "No Internet";
+        }
+        return receivedData.replace(";","").trim();
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SelectionMenu extends AppCompatActivity {
@@ -43,6 +44,8 @@ public class SelectionMenu extends AppCompatActivity {
 
     /* Sover is die DateDayTownTemp ge hardcode net om a voorbeeld te wys van hoe dit moet lyk,
         gedink dis net makliker om dit in een TextView te he en dan net die data concatenate soos nodig */
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,14 @@ public class SelectionMenu extends AppCompatActivity {
         {
             confirmConnection(SelectionMenu.this);
         }
+
+
+       String currentLevel =  WaterRainfallObject.getCurrentLevel(this.getApplicationContext());
+
+        String recomendation = WaterRainfallObject.getRecommendation(this.getApplicationContext());
+        ArrayList<String> list = WaterRainfallObject.getGraphData(this.getApplicationContext());
+        ArrayList<String> k = new ArrayList<>();
+
     }
 
     void startRepeatingTask()
@@ -161,42 +172,12 @@ public class SelectionMenu extends AppCompatActivity {
     {
         @Override
         public void run() {
-            readData();
+            WeatherObject.SelectionMenuDisplay(getApplicationContext(),dataForDateDayTownTemp);//could cause possible problems ?
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
     };
 
-    public void readData()
-    {
-        String receivedData = "No Data";
-        try
-        {
-            //Procedure name,Columns,Rows
-            receivedData = new AsyncServerAccess(this.getApplicationContext()).execute("CurrentWeather",  "3"   ,"1").get();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
 
-        String [] Data = receivedData.split(";");
-
-        try
-        {
-            int currentTemp = Integer.parseInt(Data[2].substring(0,Data[2].indexOf(".")));
-            String townName = "Venda";
-
-            String display = String.format("%s \n%s %s°C",dataForDateDayTownTemp ,townName, currentTemp);
-            dateDayTownTemp.setText(display);
-        }
-        catch (Exception e)
-        {
-            Log.e("error:", e.getMessage());
-        }
-
-    }
 
     private void confirmConnection(Activity context)
     {

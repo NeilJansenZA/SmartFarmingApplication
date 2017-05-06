@@ -117,7 +117,7 @@ public class SelectionMenu extends AppCompatActivity {
             confirmConnection(SelectionMenu.this);
         }
     }
-//..
+//...
     public void switchToIrrigation(View v)
     {
         if(connection)

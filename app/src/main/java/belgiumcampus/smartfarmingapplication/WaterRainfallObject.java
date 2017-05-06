@@ -1,8 +1,8 @@
 package belgiumcampus.smartfarmingapplication;
 
-import android.content.Context;
+        import android.content.Context;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 /**
  * Created by Pieter on 05/05/2017.
@@ -24,7 +24,7 @@ public class WaterRainfallObject {
         receivedData =  DataAccess.readData(context,"sp_ShowLatestWaterTableValue",  "3"   ,    "1",      "2");
         return receivedData.replace(";","").trim();
     }
-////
+    ////
     public static  String getCurrentLevel(Context context)
     {
         String receivedData = "No;Data";
@@ -52,5 +52,5 @@ public class WaterRainfallObject {
 
         return  listOfGraphData;
     }
-
+//
 }

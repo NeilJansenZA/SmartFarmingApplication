@@ -24,7 +24,7 @@ public class WaterRainfallObject {
         receivedData =  DataAccess.readData(context,"sp_ShowLatestWaterTableValue",  "3"   ,    "1",      "2");
         return receivedData.replace(";","").trim();
     }
-//
+///
     public static  String getCurrentLevel(Context context)
     {
         String receivedData = "No;Data";

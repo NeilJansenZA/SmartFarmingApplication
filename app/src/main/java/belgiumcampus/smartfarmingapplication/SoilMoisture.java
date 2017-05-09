@@ -14,7 +14,10 @@ public class SoilMoisture extends AppCompatActivity {
     private TextView vTitle, tvOverallMoistureReading, tvMoistureReading, tvSensorInformationTitle, tvSensorReadingTitle, tvSensorConnection, tvSensorIdealReadingTitle, tvSoilMoistureRecommendation, tvSensorReading, tvIdealReading;
     private View vAppBar;
     private ImageView imgConnection;
-    private String recommendationData;
+    private String recommendationData, idealReadingData, overallReadingData, sensorReadingData;
+    private double  moisturePercentage, overallReadingDouble;
+    private int moistureInt, overallInt;
+    private static final int idealReading = 60; //Depending on ideal Reading required
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,43 @@ public class SoilMoisture extends AppCompatActivity {
         tvSoilMoistureRecommendation.setTypeface(robotoRegular);
         tvSensorReading.setTypeface(robotoRegular);
         tvIdealReading.setTypeface(robotoRegular);
+
+        recommendationData = SoilMoistureObject.Recommendation(getApplicationContext());
+        sensorReadingData = SoilMoistureObject.MoisturePercentage(getApplicationContext());
+
+        try
+        {
+            moisturePercentage = Double.parseDouble(sensorReadingData);
+            overallReadingDouble = Math.ceil((moisturePercentage + idealReading) / 2);
+            moistureInt = (int) Math.ceil(moisturePercentage);
+            overallInt = (int) overallReadingDouble;
+            sensorReadingData = String.valueOf(moistureInt + "%");
+            idealReadingData = String.valueOf(idealReading + "%");
+            overallReadingData = String.valueOf(overallInt + "%");
+        }
+        catch (Exception e)
+        {
+            overallReadingData = String.valueOf(0 + "%");
+        }
+        finally
+        {
+            if(recommendationData.equals("0"))
+            {
+                recommendationData = "IRRIGATION\r\nNOT NEEDED";
+            }
+            else if(recommendationData.equals("1"))
+            {
+                recommendationData = "IRRIGATION\r\nNEEDED";
+            }
+            else
+            {
+                recommendationData = "NO INTERNET\r\nCONNECTION";
+            }
+            tvMoistureReading.setText(overallReadingData);
+            tvSensorReading.setText(sensorReadingData);
+            tvIdealReading.setText(idealReadingData);
+            tvSoilMoistureRecommendation.setText(recommendationData);
+        }
     }
 
     public void Restart(View v)

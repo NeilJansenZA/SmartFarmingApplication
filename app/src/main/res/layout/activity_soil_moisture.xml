@@ -43,7 +43,7 @@
             android:gravity="center"/>
 
         <TextView
-            android:text="80%"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvOverallReading"
@@ -93,7 +93,7 @@
 
 
         <TextView
-            android:text="80%"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvSoilMoistureReading"
@@ -118,7 +118,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/soilmoisture_confour"
+            app:srcCompat="@drawable/soilmoisture_nocon"
             android:id="@+id/imgConnection"
             app:layout_constraintTop_toTopOf="@+id/tvSensorConnectionTitle"
             app:layout_constraintRight_toRightOf="@+id/imgSensorInformation"
@@ -139,7 +139,7 @@
             android:layout_marginBottom="20dp" />
 
         <TextView
-            android:text="60%"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvIdealReading"
